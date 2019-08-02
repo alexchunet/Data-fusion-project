@@ -2,12 +2,13 @@
 Data Fusion project
 
 ## Countries
-United States
-Brazil
-Mexico
-Argentina
-Colombia
-Indonesia
-Malaysia
-Thailand
-Philippines
+| Country       	| Description 	|
+|---------------	|-------------	|
+| United States 	| AFG         	|
+| Brazil        	| BGD         	|
+| Mexico        	| BTN         	|
+| Argentina     	| IND         	|
+| Colombia      	| LKA         	|
+| Indonesia     	| MDV         	|
+| Malaysia      	| NPL         	|
+| Thailand      	| PAK         	|
