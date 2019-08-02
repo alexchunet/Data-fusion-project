@@ -4,7 +4,7 @@ Data Fusion project
 ## Countries
 | Country       	| Description 	|
 |---------------	|-------------	|
-| United States 	|             	|
+| United States 	| Look for monthly disaggregated emploment data |
 | Brazil        	|             	|
 | Mexico        	|             	|
 | Argentina     	|             	|
