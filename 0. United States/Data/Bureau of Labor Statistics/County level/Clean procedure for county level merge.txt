@@ -1,0 +1,253 @@
+-----------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/JavierParada/Desktop/DECAT/0. United States/Data/Bureau of Labor Statistics/County level/Clean proc
+> edure for county level merge.txt
+  log type:  text
+ opened on:   6 Aug 2019, 16:36:46
+
+. 
+. 
+. /*==================================================
+>               1: Download county level data from BLS website and save it 
+> ==================================================*/
+.  /* 
+> 
+>         curl https://download.bls.gov/pub/time.series/la/la.data.64.County -O
+>         curl https://download.bls.gov/pub/time.series/la/la.area -O
+> 
+>         The last two digits are the measure codes:
+>                 
+>                 03 – unemployment rate
+>                 04 – unemployment (level)
+>                 05 – employment
+>                 06 – labor force
+> */
+.  
+. /*==================================================
+>               2: Import unemploment datasets into Stata and save as Stata database
+> ==================================================*/
+.  /* 
+>                         - add csv extention
+>                         - import delimited "la.area.csv", clear 
+>                         - import delimited "la.data.64.csv", clear 
+> */
+. 
+.  
+. /*==================================================
+>               3: Merge both datasets and keep desired variable unemployment rate (03)
+> ==================================================*/
+. 
+.                         use "la.data.64.dta", clear 
+
+. 
+.                         split series_id, p("LAU")
+variables created as string: 
+series_id1  series_id2
+
+.                         gen series=substr(series_id, 19,2)
+
+.                         gen area_code=substr(series_id2,1,15)
+
+.                         merge m:1 area_code using "la.area.dta" /* This dataset contains the county names */
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                         5,068
+        from master                         0  (_merge==1)
+        from using                      5,068  (_merge==2)
+
+    matched                         4,929,220  (_merge==3)
+    -----------------------------------------
+
+.                         keep if _merge==3
+(5,068 observations deleted)
+
+.                         *split area_text, p(", ")
+. 
+.                         keep if series=="03"
+(3,696,915 observations deleted)
+
+.                         order area_text year period value
+
+.                         keep area_text year period value
+
+.                         compress
+  variable area_text was str84 now str47
+  (45,595,285 bytes saved)
+
+. 
+.  
+. /*==================================================
+>               4: Clean dataset
+> ==================================================*/
+. 
+.                         egen tag = tag(area_text)
+
+.                         keep if tag==1
+(1,229,083 observations deleted)
+
+.                         
+.                         split area_text, p(", ")
+variables created as string: 
+area_text1  area_text2
+
+.                         rename area_text1 county_name
+
+.                         rename area_text2 state
+
+.                         
+.                         split county_name, p("/")
+variables created as string: 
+county_name1  county_name2
+
+.                         drop county_name
+
+.                         rename county_name1 county_name
+
+.                         
+.                         split county_name, p(" Borough")
+variable created as string: 
+county_name1
+
+.                         drop county_name county_name2
+
+.                         rename county_name1 county_name
+
+.                         
+.                         bysort state county_name: gen count=_N
+
+.                         tab count
+
+      count |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |      3,222      100.00      100.00
+------------+-----------------------------------
+      Total |      3,222      100.00
+
+.                         drop count
+
+.                         
+.                         sort state
+
+.                         replace state="DC" if county_name=="District of Columbia"
+(1 real change made)
+
+.                         replace county_name="DoÃ±a Ana County" if county_name=="Dona Ana County"
+(1 real change made)
+
+. 
+.                         order state county_name area_text year period value
+
+.                         save "counties_03.dta", replace
+file counties_03.dta saved
+
+. 
+.  
+. /*==================================================
+>               5: Open USA Twitter users data 
+> ==================================================*/
+. 
+. 
+.                         import delimited "/Users/JavierParada/Desktop/DECAT/0. United States/Data/Twitter/account-loc
+> ations-identified.csv", clear 
+(13 vars, 39,802 obs)
+
+.                         gsort -n
+
+.                         keep if country_short=="US" /* 10,335 */ 
+(29,467 observations deleted)
+
+.                         
+.                         *MAP 
+.                         *twoway (scatter latitude longitude, msize(vtiny))
+. 
+.                         rename administrative_area_level_2_long county_name
+
+.                         rename administrative_area_level_1_shor state
+
+.  
+. /*==================================================
+>               6: Merge Twitter users data with unemployment data
+> ==================================================*/
+.                         
+.                         
+.                         merge m:1 state county_name using "counties_03.dta"
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                         3,405
+        from master                     1,371  (_merge==1)
+        from using                      2,034  (_merge==2)
+
+    matched                             8,964  (_merge==3)
+    -----------------------------------------
+
+.                         tab _merge
+
+                 _merge |      Freq.     Percent        Cum.
+------------------------+-----------------------------------
+        master only (1) |      1,371       11.08       11.08
+         using only (2) |      2,034       16.44       27.53
+            matched (3) |      8,964       72.47      100.00
+------------------------+-----------------------------------
+                  Total |     12,369      100.00
+
+. 
+.                         tab county_name if _merge==1
+
+                            county_name |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                       Arlington County |          1      100.00      100.00
+----------------------------------------+-----------------------------------
+                                  Total |          1      100.00
+
+.                         
+.                         /* One mistake because Arlington County was coded as part of DC
+> 
+> 
+>                             county_name |      Freq.     Percent        Cum.
+> ----------------------------------------+-----------------------------------
+>                        Arlington County |          1      100.00      100.00
+> ----------------------------------------+-----------------------------------
+>                                   Total |          1      100.00
+>                         */ 
+.                         
+.                         drop if _merge==2
+(2,034 observations deleted)
+
+.                         tab _merge
+
+                 _merge |      Freq.     Percent        Cum.
+------------------------+-----------------------------------
+        master only (1) |      1,371       13.27       13.27
+            matched (3) |      8,964       86.73      100.00
+------------------------+-----------------------------------
+                  Total |     10,335      100.00
+
+.                         
+.                                         /* 86% were matched!
+>                                                  _merge |      Freq.     Percent        Cum.
+>                 ------------------------+-----------------------------------
+>                                 master only (1) |      1,371       13.27       13.27
+>                                         matched (3) |      8,964       86.73      100.00
+>                 ------------------------+-----------------------------------
+>                                                   Total |     10,335      100.00
+>                                                   */
+. 
+. 
+.  
+. /*==================================================
+>               7:
+> ==================================================*/
+.  
+.  
+.  
+.  
+.  
+. log close
+      name:  <unnamed>
+       log:  /Users/JavierParada/Desktop/DECAT/0. United States/Data/Bureau of Labor Statistics/County level/Clean proc
+> edure for county level merge.txt
+  log type:  text
+ closed on:   6 Aug 2019, 16:37:08
+-----------------------------------------------------------------------------------------------------------------------
