@@ -3,7 +3,7 @@
        log:  /Users/JavierParada/Desktop/DECAT/0. United States/Data/Bureau of Labor Statistics/County level/Clean proc
 > edure for county level merge.txt
   log type:  text
- opened on:   6 Aug 2019, 16:36:46
+ opened on:   6 Aug 2019, 16:45:31
 
 . 
 . 
@@ -249,5 +249,5 @@ file counties_03.dta saved
        log:  /Users/JavierParada/Desktop/DECAT/0. United States/Data/Bureau of Labor Statistics/County level/Clean proc
 > edure for county level merge.txt
   log type:  text
- closed on:   6 Aug 2019, 16:37:08
+ closed on:   6 Aug 2019, 16:46:25
 -----------------------------------------------------------------------------------------------------------------------
