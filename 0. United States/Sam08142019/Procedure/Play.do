@@ -1,6 +1,15 @@
 clear all
 
-* Extract US locations from account-locations-identified.csv
+
+	
+	use "/Users/JavierParada/Desktop/DECAT/0. United States/Data/Bureau of Labor Statistics/County level/unemployment.dta", clear
+	destring v1, gen(location_id)
+	drop v1
+	cd "C:\Users\WB459082\Desktop\Sam08142019\Twitter\"
+	save "locations.dta", replace
+	
+x
+/* Extract US locations from account-locations-identified.csv
 	cd "C:\Users\WB459082\Desktop\Sam08142019\Twitter\"
 	import delimited "account-locations-identified.csv", encoding(UTF-8) clear
 	replace country_short="US" if location=="New York"
@@ -8,7 +17,7 @@ clear all
 	destring v1, gen(location_id)
 	drop v1
 	save "locations.dta", replace
-
+*/
 
 * Time series of mentions of Twitter users’ labor market status extracted from US tweets
 * 754,306
