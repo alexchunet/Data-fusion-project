@@ -7,7 +7,7 @@ url:
 Dependencies:  World Bank
 ----------------------------------------------------
 Creation Date:     6 Aug 2019 - 16:12:51
-Modification Date:  
+Modification Date:  14 Aug 2019
 Do-file version:    01
 References:         
 Output:            
@@ -52,8 +52,9 @@ log using "Clean procedure for county level merge.txt", replace text
 /*==================================================
               3: Merge both datasets and keep desired variable unemployment rate (03)
 ==================================================*/
-
-			use "la.data.64.dta", clear 
+			
+			cd "/Users/JavierParada/Desktop/Heavy Data/"
+			use "la.data.64.County.dta", clear 
 
 			split series_id, p("LAU")
 			gen series=substr(series_id, 19,2)
@@ -96,6 +97,7 @@ log using "Clean procedure for county level merge.txt", replace text
 			replace county_name="DoÃ±a Ana County" if county_name=="Dona Ana County"
 
 			order state county_name area_text year period value
+			cd "/Users/JavierParada/Desktop/DECAT/0. United States/Data/Bureau of Labor Statistics/County level/"
 			save "counties_03.dta", replace
 
  
@@ -106,6 +108,7 @@ log using "Clean procedure for county level merge.txt", replace text
 
 			import delimited "/Users/JavierParada/Desktop/DECAT/0. United States/Data/Twitter/account-locations-identified.csv", clear 
 			gsort -n
+			replace country_short="US" if location=="New York"
 			keep if country_short=="US" /* 10,335 */ 
 			
 			*MAP 
@@ -149,9 +152,10 @@ log using "Clean procedure for county level merge.txt", replace text
 
  
 /*==================================================
-              7:
+              7: Save database
 ==================================================*/
  
+			save "unemployment.dta", replace
  
  
  

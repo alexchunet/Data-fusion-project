@@ -3,7 +3,7 @@
        log:  /Users/JavierParada/Desktop/DECAT/0. United States/Data/Bureau of Labor Statistics/County level/Clean proc
 > edure for county level merge.txt
   log type:  text
- opened on:   6 Aug 2019, 16:45:31
+ opened on:  14 Aug 2019, 13:27:07
 
 . 
 . 
@@ -36,8 +36,11 @@
 . /*==================================================
 >               3: Merge both datasets and keep desired variable unemployment rate (03)
 > ==================================================*/
-. 
-.                         use "la.data.64.dta", clear 
+.                         
+.                         cd "/Users/JavierParada/Desktop/Heavy Data/"
+/Users/JavierParada/Desktop/Heavy Data
+
+.                         use "la.data.64.County.dta", clear 
 
 . 
 .                         split series_id, p("LAU")
@@ -138,6 +141,10 @@ county_name1
 . 
 .                         order state county_name area_text year period value
 
+.                         cd "/Users/JavierParada/Desktop/DECAT/0. United States/Data/Bureau of Labor Statistics/County
+>  level/"
+/Users/JavierParada/Desktop/DECAT/0. United States/Data/Bureau of Labor Statistics/County level
+
 .                         save "counties_03.dta", replace
 file counties_03.dta saved
 
@@ -154,8 +161,11 @@ file counties_03.dta saved
 
 .                         gsort -n
 
+.                         replace country_short="US" if location=="New York"
+(1 real change made)
+
 .                         keep if country_short=="US" /* 10,335 */ 
-(29,467 observations deleted)
+(29,466 observations deleted)
 
 .                         
 .                         *MAP 
@@ -175,8 +185,8 @@ file counties_03.dta saved
 
     Result                           # of obs.
     -----------------------------------------
-    not matched                         3,405
-        from master                     1,371  (_merge==1)
+    not matched                         3,406
+        from master                     1,372  (_merge==1)
         from using                      2,034  (_merge==2)
 
     matched                             8,964  (_merge==3)
@@ -186,11 +196,11 @@ file counties_03.dta saved
 
                  _merge |      Freq.     Percent        Cum.
 ------------------------+-----------------------------------
-        master only (1) |      1,371       11.08       11.08
+        master only (1) |      1,372       11.09       11.09
          using only (2) |      2,034       16.44       27.53
             matched (3) |      8,964       72.47      100.00
 ------------------------+-----------------------------------
-                  Total |     12,369      100.00
+                  Total |     12,370      100.00
 
 . 
 .                         tab county_name if _merge==1
@@ -219,10 +229,10 @@ file counties_03.dta saved
 
                  _merge |      Freq.     Percent        Cum.
 ------------------------+-----------------------------------
-        master only (1) |      1,371       13.27       13.27
+        master only (1) |      1,372       13.27       13.27
             matched (3) |      8,964       86.73      100.00
 ------------------------+-----------------------------------
-                  Total |     10,335      100.00
+                  Total |     10,336      100.00
 
 .                         
 .                                         /* 86% were matched!
@@ -237,9 +247,12 @@ file counties_03.dta saved
 . 
 .  
 . /*==================================================
->               7:
+>               7: Save database
 > ==================================================*/
 .  
+.                         save "unemployment.dta", replace
+file unemployment.dta saved
+
 .  
 .  
 .  
@@ -249,5 +262,5 @@ file counties_03.dta saved
        log:  /Users/JavierParada/Desktop/DECAT/0. United States/Data/Bureau of Labor Statistics/County level/Clean proc
 > edure for county level merge.txt
   log type:  text
- closed on:   6 Aug 2019, 16:46:25
+ closed on:  14 Aug 2019, 13:27:27
 -----------------------------------------------------------------------------------------------------------------------
