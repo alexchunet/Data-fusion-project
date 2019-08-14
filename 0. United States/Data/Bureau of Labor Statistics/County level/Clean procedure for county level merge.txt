@@ -1,9 +1,9 @@
------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  /Users/JavierParada/Desktop/DECAT/0. United States/Data/Bureau of Labor Statistics/County level/Clean proc
-> edure for county level merge.txt
+       log:  C:\Users\WB459082\Desktop\DECAT\0. United States\Data\Bureau of Labor Statistics\County level\Clean procedure for county level merge.tx
+> t
   log type:  text
- opened on:  14 Aug 2019, 14:04:25
+ opened on:  14 Aug 2019, 17:07:43
 
 . 
 . 
@@ -36,11 +36,10 @@
 . /*==================================================
 >               3: Merge both datasets and keep desired variable unemployment rate (03)
 > ==================================================*/
-.                         
-.                         cd "/Users/JavierParada/Desktop/Heavy Data/"
-/Users/JavierParada/Desktop/Heavy Data
+.                         cd "C:\Users\WB459082\Desktop\DECAT\0. United States\Data\Bureau of Labor Statistics\County level\LAU Data\"
+C:\Users\WB459082\Desktop\DECAT\0. United States\Data\Bureau of Labor Statistics\County level\LAU Data
 
-.                         use "la.data.64.County.dta", clear 
+.                         use "la_data_64_County.dta", clear
 
 . 
 .                         split series_id, p("LAU")
@@ -51,7 +50,7 @@ series_id1  series_id2
 
 .                         gen area_code=substr(series_id2,1,15)
 
-.                         merge m:1 area_code using "la.area.dta" /* This dataset contains the county names */
+.                         merge m:1 area_code using "la_area.dta" /* This dataset contains the county names */
 
     Result                           # of obs.
     -----------------------------------------
@@ -83,12 +82,21 @@ series_id1  series_id2
 . /*==================================================
 >               4: Clean dataset
 > ==================================================*/
-. 
+.                         rename year year2
+
+.                         destring year2, gen(year)
+year2: all characters numeric; year generated as int
+
+.                         destring value, gen(unemployment_rate)  force
+value: contains nonnumeric characters; unemployment_rate generated as double
+(84 missing values generated)
+
+.                         drop year2
+
+.                         
 .                         egen tag = tag(area_text)
 
-.                         keep if tag==1
-(1,229,083 observations deleted)
-
+.                         *keep if tag==1
 .                         
 .                         split area_text, p(", ")
 variables created as string: 
@@ -123,9 +131,12 @@ county_name1
 
       count |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |      3,222      100.00      100.00
+        123 |        615        0.05        0.05
+        260 |        780        0.06        0.11
+        331 |        331        0.03        0.14
+        383 |  1,230,579       99.86      100.00
 ------------+-----------------------------------
-      Total |      3,222      100.00
+      Total |  1,232,305      100.00
 
 .                         drop count
 
@@ -133,17 +144,16 @@ county_name1
 .                         sort state
 
 .                         replace state="DC" if county_name=="District of Columbia"
-(1 real change made)
+(383 real changes made)
 
 .                         replace county_name="DoÃ±a Ana County" if county_name=="Dona Ana County"
-(1 real change made)
+(383 real changes made)
 
 . 
-.                         order state county_name area_text year period value
+.                         order state county_name area_text year period unemployment_rate
 
-.                         cd "/Users/JavierParada/Desktop/DECAT/0. United States/Data/Bureau of Labor Statistics/County
->  level/"
-/Users/JavierParada/Desktop/DECAT/0. United States/Data/Bureau of Labor Statistics/County level
+.                         cd "C:\Users\WB459082\Desktop\DECAT\0. United States\Data\Bureau of Labor Statistics\County level\"
+C:\Users\WB459082\Desktop\DECAT\0. United States\Data\Bureau of Labor Statistics\County level
 
 .                         save "counties_03.dta", replace
 file counties_03.dta saved
@@ -154,9 +164,151 @@ file counties_03.dta saved
 >               5: Open USA Twitter users data 
 > ==================================================*/
 . 
-. 
-.                         import delimited "/Users/JavierParada/Desktop/DECAT/0. United States/Data/Twitter/account-loc
-> ations-identified.csv", clear 
+.                         import delimited "C:\Users\WB459082\Desktop\DECAT\0. United States\Data\Twitter\account-locations-identified.csv", clear
+Note: Unmatched quote while processing row 8433; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 8434; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 8433; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 8434; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 11062; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 11063; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 14325; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 14326; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 15064; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 15065; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 20316; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 20317; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 21207; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 21208; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 22201; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 22202; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 24753; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 24754; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 25034; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 25035; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 27391; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 27392; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 27777; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 27778; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 28830; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 28831; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 29700; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 29701; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 32693; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 32694; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 33478; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 33479; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 35607; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 35608; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 36434; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 36435; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 36826; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 36827; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 37683; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 37684; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 38168; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 38169; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 38815; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 38816; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 39171; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 39172; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 39691; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
+Note: Unmatched quote while processing row 39692; this can be due to a formatting problem in the file or because a quoted data element spans
+    multiple lines. You should carefully inspect your data after importing. Consider using option bindquote(strict) if quoted data spans multiple
+    lines or option bindquote(nobind) if quotes are not used for binding data.
 (13 vars, 39,802 obs)
 
 .                         gsort -n
@@ -181,26 +333,26 @@ file counties_03.dta saved
 > ==================================================*/
 .                         
 .                         
-.                         merge m:1 state county_name using "counties_03.dta"
+.                         merge m:m state county_name using "counties_03.dta"
 
     Result                           # of obs.
     -----------------------------------------
-    not matched                         3,406
+    not matched                       778,673
         from master                     1,372  (_merge==1)
-        from using                      2,034  (_merge==2)
+        from using                    777,301  (_merge==2)
 
-    matched                             8,964  (_merge==3)
+    matched                           455,019  (_merge==3)
     -----------------------------------------
 
 .                         tab _merge
 
                  _merge |      Freq.     Percent        Cum.
 ------------------------+-----------------------------------
-        master only (1) |      1,372       11.09       11.09
-         using only (2) |      2,034       16.44       27.53
-            matched (3) |      8,964       72.47      100.00
+        master only (1) |      1,372        0.11        0.11
+         using only (2) |    777,301       63.01       63.12
+            matched (3) |    455,019       36.88      100.00
 ------------------------+-----------------------------------
-                  Total |     12,370      100.00
+                  Total |  1,233,692      100.00
 
 . 
 .                         tab county_name if _merge==1
@@ -223,16 +375,16 @@ file counties_03.dta saved
 >                         */ 
 .                         
 .                         drop if _merge==2
-(2,034 observations deleted)
+(777,301 observations deleted)
 
 .                         tab _merge
 
                  _merge |      Freq.     Percent        Cum.
 ------------------------+-----------------------------------
-        master only (1) |      1,372       13.27       13.27
-            matched (3) |      8,964       86.73      100.00
+        master only (1) |      1,372        0.30        0.30
+            matched (3) |    455,019       99.70      100.00
 ------------------------+-----------------------------------
-                  Total |     10,336      100.00
+                  Total |    456,391      100.00
 
 .                         
 .                                         /* 86% were matched!
@@ -249,7 +401,32 @@ file counties_03.dta saved
 . /*==================================================
 >               7: Save database
 > ==================================================*/
-.  
+.                         sort v1
+
+.                         rename county_name administrative_area_level_2_long
+
+.                         rename state administrative_area_level_1_shor
+
+.                         destring v1, gen(location_id)
+v1: all characters numeric; location_id generated as long
+
+.                         drop v1 _merge
+
+.                         
+.                         split period, p("M")
+variables created as string: 
+period1  period2
+
+.                         destring period2, gen(month)
+period2: all characters numeric; month generated as byte
+(1372 missing values generated)
+
+.                         drop period period1 period2
+
+.                         drop if month==13
+(34,452 observations deleted)
+
+. 
 .                         save "unemployment.dta", replace
 file unemployment.dta saved
 
@@ -259,8 +436,8 @@ file unemployment.dta saved
 .  
 . log close
       name:  <unnamed>
-       log:  /Users/JavierParada/Desktop/DECAT/0. United States/Data/Bureau of Labor Statistics/County level/Clean proc
-> edure for county level merge.txt
+       log:  C:\Users\WB459082\Desktop\DECAT\0. United States\Data\Bureau of Labor Statistics\County level\Clean procedure for county level merge.tx
+> t
   log type:  text
- closed on:  14 Aug 2019, 14:04:50
------------------------------------------------------------------------------------------------------------------------
+ closed on:  14 Aug 2019, 17:08:37
+----------------------------------------------------------------------------------------------------------------------------------------------------

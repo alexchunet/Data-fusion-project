@@ -1,14 +1,8 @@
 clear all
 
-
-	
-	use "/Users/JavierParada/Desktop/DECAT/0. United States/Data/Bureau of Labor Statistics/County level/unemployment.dta", clear
-	destring v1, gen(location_id)
-	drop v1
-	cd "C:\Users\WB459082\Desktop\Sam08142019\Twitter\"
+	use "C:\Users\WB459082\Desktop\DECAT\0. United States\Data\Bureau of Labor Statistics\County level\unemployment.dta", clear
 	save "locations.dta", replace
-	
-x
+
 /* Extract US locations from account-locations-identified.csv
 	cd "C:\Users\WB459082\Desktop\Sam08142019\Twitter\"
 	import delimited "account-locations-identified.csv", encoding(UTF-8) clear
@@ -22,10 +16,15 @@ x
 * Time series of mentions of Twitter users’ labor market status extracted from US tweets
 * 754,306
 * 2011 -2018
-	import delimited "US.csv", encoding(UTF-8) clear
+	import delimited "C:\Users\WB459082\Desktop\DECAT\0. United States\Sam08142019\Twitter\US.csv", encoding(UTF-8) clear
 	tab month year
-	merge m:1 location_id using "locations.dta", force
+	
+	merge m:1 location_id month year using "C:\Users\WB459082\Desktop\DECAT\0. United States\Data\Bureau of Labor Statistics\County level\unemployment.dta", force
 	sort v1
+	drop if _merge==2
+	br if _merge==1
+	
+	
 	drop _merge
 /*
     Result                           # of obs.
@@ -33,7 +32,7 @@ x
     not matched                             0
     matched                           754,306  (_merge==3)
     -----------------------------------------*/
-	
+
 * Export to Tableau
 *export delimited using "C:\Users\WB459082\Desktop\Sam08142019\Tableau\Dash1\Mentions.csv", replace
 
@@ -58,7 +57,7 @@ foreach i of local mentions{
 	display "`i'"
 	sum d_`i'
 }
-x
+
 /*collapse (mean) d*
 
 Variable							Freq
@@ -126,6 +125,9 @@ gen count= t_anyone_hiring+ t_i_am_unemployed+ t_i_got_fired+ t_i_got_laid_off+ 
 *replace count=1 if count>0
 tab count, sum(pc1_counts)
 
+
+*** FIGURES ***
+
 /* Scatterplot shows outliers from "looking for a job" and "need a job" when using counts 
 	gen obs = 1
 	collapse (sum) obs, by(pc1_counts pc1_dummies)
@@ -138,18 +140,27 @@ tab count, sum(pc1_counts)
 	gr combine bar_dummies bar_counts
 */ 
 
-collapse (mean) count pc1_dummies pc1_counts, by(month year administrative_area_level_1_long state)
-order state year month
-sort  state year month
-gen day=1
-gen date=mdy(month,day,year)
-format date %td
-tsset state date
-levelsof administrative_area_level_1_long, local(states)
+/* Binder
+	collapse (mean) count pc1_dummies pc1_counts unemployment_rate, by(month year administrative_area_level_1_long state)
+	order state year month
+	sort  state year month
+	gen day=1
+	gen date=mdy(month,day,year)
+	format date %td
+	tsset state date
+	levelsof administrative_area_level_1_long, local(states)
 
-cd "C:\Users\WB459082\Desktop\Sam08142019\Twitter\Graphs"
-foreach i of local states{
-	tsline count pc1_dummies pc1_counts if administrative_area_level_1_long=="`i'", title("`i'")
-	graph export "`i'.pdf"
-}
+	cd "C:\Users\WB459082\Desktop\DECAT\0. United States\Sam08142019\Twitter\Graphs"
+	foreach i of local states{
+		tsline count pc1_dummies pc1_counts unemployment_rate if administrative_area_level_1_long=="`i'", title("`i'")
+		graph export "`i'.pdf", replace
+	}
 
+*/
+eststo clear
+	
+eststo: reg  pc1_dummies unemployment_rate
+eststo: reg  pc1_counts unemployment_rate
+eststo: reg count unemployment_rate
+
+esttab, se

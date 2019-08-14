@@ -19,7 +19,7 @@ Output:
 *version 16
 drop _all
  
-cd "/Users/JavierParada/Desktop/DECAT/0. United States/Data/Bureau of Labor Statistics/County level/"
+cd "C:\Users\WB459082\Desktop\DECAT\0. United States\Data\Bureau of Labor Statistics\County level\"
 log using "Clean procedure for county level merge.txt", replace text
 
 
@@ -52,14 +52,13 @@ log using "Clean procedure for county level merge.txt", replace text
 /*==================================================
               3: Merge both datasets and keep desired variable unemployment rate (03)
 ==================================================*/
-			
-			cd "/Users/JavierParada/Desktop/Heavy Data/"
-			use "la.data.64.County.dta", clear 
+			cd "C:\Users\WB459082\Desktop\DECAT\0. United States\Data\Bureau of Labor Statistics\County level\LAU Data\"
+			use "la_data_64_County.dta", clear
 
 			split series_id, p("LAU")
 			gen series=substr(series_id, 19,2)
 			gen area_code=substr(series_id2,1,15)
-			merge m:1 area_code using "la.area.dta" /* This dataset contains the county names */
+			merge m:1 area_code using "la_area.dta" /* This dataset contains the county names */
 			keep if _merge==3
 			*split area_text, p(", ")
 
@@ -72,9 +71,13 @@ log using "Clean procedure for county level merge.txt", replace text
 /*==================================================
               4: Clean dataset
 ==================================================*/
-
+			rename year year2
+			destring year2, gen(year)
+			destring value, gen(unemployment_rate)  force
+			drop year2
+			
 			egen tag = tag(area_text)
-			keep if tag==1
+			*keep if tag==1
 			
 			split area_text, p(", ")
 			rename area_text1 county_name
@@ -96,8 +99,8 @@ log using "Clean procedure for county level merge.txt", replace text
 			replace state="DC" if county_name=="District of Columbia"
 			replace county_name="DoÃ±a Ana County" if county_name=="Dona Ana County"
 
-			order state county_name area_text year period value
-			cd "/Users/JavierParada/Desktop/DECAT/0. United States/Data/Bureau of Labor Statistics/County level/"
+			order state county_name area_text year period unemployment_rate
+			cd "C:\Users\WB459082\Desktop\DECAT\0. United States\Data\Bureau of Labor Statistics\County level\"
 			save "counties_03.dta", replace
 
  
@@ -105,8 +108,7 @@ log using "Clean procedure for county level merge.txt", replace text
               5: Open USA Twitter users data 
 ==================================================*/
 
-
-			import delimited "/Users/JavierParada/Desktop/DECAT/0. United States/Data/Twitter/account-locations-identified.csv", clear 
+			import delimited "C:\Users\WB459082\Desktop\DECAT\0. United States\Data\Twitter\account-locations-identified.csv", clear
 			gsort -n
 			replace country_short="US" if location=="New York"
 			keep if country_short=="US" /* 10,335 */ 
@@ -122,7 +124,7 @@ log using "Clean procedure for county level merge.txt", replace text
 ==================================================*/
  			
 			
-			merge m:1 state county_name using "counties_03.dta"
+			merge m:m state county_name using "counties_03.dta"
 			tab _merge
 
 			tab county_name if _merge==1
@@ -154,7 +156,17 @@ log using "Clean procedure for county level merge.txt", replace text
 /*==================================================
               7: Save database
 ==================================================*/
- 
+			sort v1
+			rename county_name administrative_area_level_2_long
+			rename state administrative_area_level_1_shor
+			destring v1, gen(location_id)
+			drop v1 _merge
+			
+			split period, p("M")
+			destring period2, gen(month)
+			drop period period1 period2
+			drop if month==13
+
 			save "unemployment.dta", replace
  
  
