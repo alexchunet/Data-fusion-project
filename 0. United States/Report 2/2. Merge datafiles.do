@@ -9,7 +9,7 @@ url:
 Dependencies:  World Bank
 ----------------------------------------------------
 Creation Date:    14 Aug 2019 - 14:39:32
-Modification Date:   26 Aug 2019
+Modification Date:   16 Sep 2019
 Do-file version:    01
 References:          
 Output:             
@@ -68,8 +68,32 @@ cd "C:\Users\WB459082\Desktop\DECAT\0. United States\Report 2\"
 *----------2.2: Mention dummies (Yes/No) instead of count
 
 				rename summention* t* 
-
-				local mentions "t_anyone_hiring t_i_am_unemployed t_i_got_fired t_i_got_laid_off t_i_have_been_fired t_i_have_been_laid_off 			      t_i_have_gotten_laid_of t_i_was_fired t_i_was_laid_off t_ive_been_fired t_ive_been_laid_off t_ive_gotten_laid_off t_looking_for_a_job t_looking_for_a_new_job 		t_lost_my_job t_need_a_job t_need_a_new_job t_need_help_finding_a_j t_searching_for_a_job t_searching_for_a_new_j t_who_is_hiring t_whos_hiring sumn_tweets"
+				
+				#delimit
+				local mentions "t_anyone_hiring 
+								t_i_am_unemployed 
+								t_i_got_fired 
+								t_i_got_laid_off 
+								t_i_have_been_fired 
+								t_i_have_been_laid_off 			      
+								t_i_have_gotten_laid_of 
+								t_i_was_fired 
+								t_i_was_laid_off 
+								t_ive_been_fired 
+								t_ive_been_laid_off 
+								t_ive_gotten_laid_off 
+								t_looking_for_a_job 
+								t_looking_for_a_new_job 		
+								t_lost_my_job 
+								t_need_a_job 
+								t_need_a_new_job 
+								t_need_help_finding_a_j 
+								t_searching_for_a_job 
+								t_searching_for_a_new_j 
+								t_who_is_hiring 
+								t_whos_hiring 
+								sumn_tweets";
+				#delimit cr
 
 				* outliers
 				sum t_need_a_job t_looking_for_a_job
@@ -151,7 +175,7 @@ cd "C:\Users\WB459082\Desktop\DECAT\0. United States\Report 2\"
 	
 /*----------4.3: Binder
 
-			collapse (mean) count pc1_dummies pc1_counts unemployment_rate, by(month year administrative_area_level_1_long state state_code)
+			collapse (mean) count count_normal pc1_dummies pc1_counts unemployment_rate, by(month year administrative_area_level_1_long state state_code)
 			order state year month
 			sort  state year month
 			gen day=1
@@ -161,9 +185,9 @@ cd "C:\Users\WB459082\Desktop\DECAT\0. United States\Report 2\"
 			tsset state_code date
 			levelsof administrative_area_level_1_long, local(states)
 
-			cd "C:\Users\WB459082\Desktop\DECAT\0. United States\Report 1\Graphs"
+			cd "C:\Users\WB459082\Desktop\DECAT\0. United States\Report 2\Graphs"
 			foreach i of local states{
-				tsline count pc1_dummies pc1_counts unemployment_rate if administrative_area_level_1_long=="`i'", title("`i'")
+				tsline count count_normal pc1_dummies pc1_counts unemployment_rate if administrative_area_level_1_long=="`i'", title("`i'")
 				graph export "`i'.pdf", replace
 			}
 			
