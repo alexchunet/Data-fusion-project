@@ -9,7 +9,7 @@ url:
 Dependencies:  World Bank
 ----------------------------------------------------
 Creation Date:    14 Aug 2019 - 14:39:32
-Modification Date:   16 Sep 2019
+Modification Date:   17 Sep 2019
 Do-file version:    01
 References:          
 Output:             
@@ -113,7 +113,7 @@ cd "C:\Users\WB459082\Desktop\DECAT\0. United States\Report 2\"
 				encode state, gen(state_code)
 
 /*==================================================
-              3: PCA
+              3: PCA and Counts
 ==================================================*/
 
 *----------3.1: PCA Dummies: Principal component that results from turning these mention counts into dummies to get rid of outliers
@@ -138,7 +138,7 @@ cd "C:\Users\WB459082\Desktop\DECAT\0. United States\Report 2\"
 			rename pc2 pc2_counts
 			label var pc1_counts "Index created with counts"
 			
-*----------3.3: PCA Count: This is the simple addition of all of the mention counts (two of the variables are completely empty). 
+*----------3.3: Count: This is the simple addition of all of the mention counts (two of the variables are completely empty). 
 			*10.99% of observations (82,920 /754,306)
 			gen dummy_pc1=pc1_dummies
 			replace dummy_pc1=0 if pc1_dummies<0
