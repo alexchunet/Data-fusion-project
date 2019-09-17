@@ -29,8 +29,9 @@ cd "C:\Users\WB459082\Desktop\DECAT\0. United States\Report 2\"
 
 *----------1.1: Open locations
 				import delimited "account-locations-identified.csv", encoding(UTF-8) clear
+				
 				replace country_short="US" if location=="New York"
-				keep if country_short=="US"
+				keep if country_short=="US" | country_short=="BR" | country_short=="MX" | country_short=="CO" | country_short=="AR" | country_short==""
 				rename  administrative_area_level_2_long county_name
 				rename  administrative_area_level_1_shor state
 				rename v1 location_id
@@ -53,9 +54,9 @@ cd "C:\Users\WB459082\Desktop\DECAT\0. United States\Report 2\"
 				replace administrative_area_level_1_long="Virginia" if county_name=="Arlington County" & state=="DC"
 				replace state="VA" if county_name=="Arlington County" & state=="DC"
 				merge m:1 state county_name year month using "US_counties_03.dta"	
-				drop if _merge==2
+				keep if _merge==3
 				sort v1
-
+				
 /*==================================================
               2: Create new variables
 ==================================================*/
@@ -193,6 +194,14 @@ cd "C:\Users\WB459082\Desktop\DECAT\0. United States\Report 2\"
 			
 */
 
+/*----------4.3=4: New Scatterplot
+
+			collapse (mean) unemployment_rate (rawsum) count sumn_tweets,  by(month year administrative_area_level_1_long state state_code)
+			gen count_normal_state= count/sumn_tweets
+			scatter  unemployment_rate count_normal_state, by(month year, cols(8))
+			export excel using "C:\Users\WB459082\Desktop\DECAT\0. United States\Report 2\tableau.xls", sheetmodify firstrow(variables) replace
+*/				
+
 /*==================================================
               5: Regressions
 ==================================================*/
@@ -207,7 +216,7 @@ cd "C:\Users\WB459082\Desktop\DECAT\0. United States\Report 2\"
 
 *----------5.2: Regressions
 
-			local controls "unemployment_rate i.month"
+			local controls "unemployment_rate i.month i.state_code"
 			
 			eststo clear
 			
