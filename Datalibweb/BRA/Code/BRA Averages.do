@@ -104,7 +104,7 @@ foreach year in 2012 2013 2014 2015 2016 2017 2018 {
 *----------1.3: Export to Excel 
 
 use "BRA Averages.dta", clear
-numlabel, add 
+*numlabel, add 
 decode reg_uf, gen( State)
 
 replace State = "Amapá" if reg_uf == 16
