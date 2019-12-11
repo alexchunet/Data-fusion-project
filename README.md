@@ -17,6 +17,9 @@ Acre, Alagoas, Amap�, Amazonas, Bahia, Cear�, Distrito Federal, Esp�rito S
 
 if "`country'"=="COL" local strata "reg_dpto"  
 
+5, 8, 11, 13, 15, 17, 18, 19, 20, 23, 25, 27, 41, 44, 47, 50, 52, 54, 63, 66, 68, 70, 73, 76
+
+
 if "`country'"=="MEX" local strata "reg_ent"  
 
 
