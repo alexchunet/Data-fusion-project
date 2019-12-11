@@ -7,6 +7,9 @@ Quarterly for Argentina and Brazil. Monthly for United States, Colombia and Mexi
 
 if "`country'"=="ARG" local strata "reg_aglomerado"  
 
+Bah�a Blanca - Cerri, Ciudad de Buenos Aires, Comodoro Rivadavia - Rada Tilly, Concordia, Corrientes, Formosa, Gran Catamarca, Gran C�rdoba, Gran La Plata, Gran Mendoza, Gran Paran�, Gran Resistencia, Gran Rosario, Gran San Juan, Gran Santa Fe, Gran Tucum�n - Taf� Viejo, Jujuy - Palpal�, La Rioja, Mar del Plata - Bat�n, Neuqu�n - Plottier, Partidos del GBA, Posadas, Rawson - Trelew, R�o Cuarto, R�o Gallegos, Salta, San Luis - El Chorrillo, San Nicol�s - Villa Constituci�n, Santa Rosa - Toay, Santiago del Estero - La Banda, Ushuaia - R�o Grande, Viedma - Carmen de Patagones
+
+
 if "`country'"=="BRA" local strata "reg_uf" 
 
 Acre, Alagoas, Amap�, Amazonas, Bahia, Cear�, Distrito Federal, Esp�rito Santo, Goi�s, Maranh�o, Mato Grosso, Mato Grosso do Sul, Minas Gerais, Paran�, Para�ba, Par�, Pernambuco, Piau�, Rio Grande do Norte, Rio Grande do Sul, Rio de Janeiro, Rond�nia, Roraima, Santa Catarina, Sergipe, S�o Paulo, Tocantins
