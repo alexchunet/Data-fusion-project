@@ -9,6 +9,9 @@ if "`country'"=="ARG" local strata "reg_aglomerado"
 
 if "`country'"=="BRA" local strata "reg_uf" 
 
+Acre, Alagoas, Amap�, Amazonas, Bahia, Cear�, Distrito Federal, Esp�rito Santo, Goi�s, Maranh�o, Mato Grosso, Mato Grosso do Sul, Minas Gerais, Paran�, Para�ba, Par�, Pernambuco, Piau�, Rio Grande do Norte, Rio Grande do Sul, Rio de Janeiro, Rond�nia, Roraima, Santa Catarina, Sergipe, S�o Paulo, Tocantins
+
+
 if "`country'"=="COL" local strata "reg_dpto"  
 
 if "`country'"=="MEX" local strata "reg_ent"  
