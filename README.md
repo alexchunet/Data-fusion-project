@@ -1,7 +1,14 @@
 # DECAT
 Data Fusion project
 
-Quarterly for ARG and BRA. Monthly for United States, Colombia and Mexico.
+Quarterly for Argentina and Brazil. Monthly for United States, Colombia and Mexico.
+
+# Strata
+
+if "`country'"=="ARG" local strata "reg_aglomerado"  
+if "`country'"=="BRA" local strata "reg_uf" 
+if "`country'"=="COL" local strata "reg_dpto"  
+if "`country'"=="MEX" local strata "reg_ent"  
 
 
 ## Countries
