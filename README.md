@@ -1,6 +1,9 @@
 # DECAT
 Data Fusion project
 
+Quarterly for ARG and BRA. Monthly for United States, Colombia and Mexico.
+
+
 ## Countries
 | Country       	| Description 	|
 |---------------	|-------------	|
