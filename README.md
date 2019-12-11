@@ -22,6 +22,8 @@ if "`country'"=="COL" local strata "reg_dpto"
 
 if "`country'"=="MEX" local strata "reg_ent"  
 
+Aguascalientes, Baja California, Baja California Sur, Campeche, Cohauila, Colima, Chiapas, Chihuahua, Distrito Federal, Durango, Guanajuato, Guerrero, Hidalgo, Jalisco, M�xico, Michoac�n, Morelos, Nayarit, Nuevo Le�n, Oaxaca, Puebla, Quer�taro de Arteaga, Quintana Roo, San Luis Potos�, Sinaloa, Sonora, Tabasco, Tamaulipas, Tlaxcala, Veracruz-Llave, Yucat�n, Zacatecas
+
 
 ## Countries
 | Country       	| Description 	|
