@@ -5,22 +5,22 @@ Quarterly for Argentina and Brazil. Monthly for United States, Colombia and Mexi
 
 # Strata
 
-if "`country'"=="ARG" local strata "reg_aglomerado"  
+## if "`country'"=="ARG" local strata "reg_aglomerado"  
 
 Bah�a Blanca - Cerri, Ciudad de Buenos Aires, Comodoro Rivadavia - Rada Tilly, Concordia, Corrientes, Formosa, Gran Catamarca, Gran C�rdoba, Gran La Plata, Gran Mendoza, Gran Paran�, Gran Resistencia, Gran Rosario, Gran San Juan, Gran Santa Fe, Gran Tucum�n - Taf� Viejo, Jujuy - Palpal�, La Rioja, Mar del Plata - Bat�n, Neuqu�n - Plottier, Partidos del GBA, Posadas, Rawson - Trelew, R�o Cuarto, R�o Gallegos, Salta, San Luis - El Chorrillo, San Nicol�s - Villa Constituci�n, Santa Rosa - Toay, Santiago del Estero - La Banda, Ushuaia - R�o Grande, Viedma - Carmen de Patagones
 
 
-if "`country'"=="BRA" local strata "reg_uf" 
+## if "`country'"=="BRA" local strata "reg_uf" 
 
 Acre, Alagoas, Amap�, Amazonas, Bahia, Cear�, Distrito Federal, Esp�rito Santo, Goi�s, Maranh�o, Mato Grosso, Mato Grosso do Sul, Minas Gerais, Paran�, Para�ba, Par�, Pernambuco, Piau�, Rio Grande do Norte, Rio Grande do Sul, Rio de Janeiro, Rond�nia, Roraima, Santa Catarina, Sergipe, S�o Paulo, Tocantins
 
 
-if "`country'"=="COL" local strata "reg_dpto"  
+## if "`country'"=="COL" local strata "reg_dpto"  
 
 5, 8, 11, 13, 15, 17, 18, 19, 20, 23, 25, 27, 41, 44, 47, 50, 52, 54, 63, 66, 68, 70, 73, 76
 
 
-if "`country'"=="MEX" local strata "reg_ent"  
+## if "`country'"=="MEX" local strata "reg_ent"  
 
 Aguascalientes, Baja California, Baja California Sur, Campeche, Cohauila, Colima, Chiapas, Chihuahua, Distrito Federal, Durango, Guanajuato, Guerrero, Hidalgo, Jalisco, M�xico, Michoac�n, Morelos, Nayarit, Nuevo Le�n, Oaxaca, Puebla, Quer�taro de Arteaga, Quintana Roo, San Luis Potos�, Sinaloa, Sonora, Tabasco, Tamaulipas, Tlaxcala, Veracruz-Llave, Yucat�n, Zacatecas
 
