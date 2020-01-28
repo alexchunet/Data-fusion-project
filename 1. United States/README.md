@@ -1,6 +1,6 @@
 ﻿# Instructions
  
- Report 2 shows the most recent version. 
+ Report 2 shows the most recent version:
  
 1. Creates US_counties_03
 
