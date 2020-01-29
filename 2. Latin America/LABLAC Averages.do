@@ -33,14 +33,12 @@ else {
 *cd "${hostdrive}\Javier2\LABLAC Averages\" 
 
 * Folder for Sam
-cd "C:\Users\wb521476\Documents\LAB LAC Averages\"
+cd "C:\Users\wb459082\Documents\LAB LAC Averages\"
 
 *----------0.2: Blank template
 
 gen Year = .
 save "LABLAC Averages.dta", replace
-
-
 
 
 /*==================================================
@@ -125,6 +123,46 @@ foreach country in ARG BRA COL MEX{
 *----------1.3: Export to Excel 
 
 use "LABLAC Averages.dta", clear
+
+
+rename Strata Strata2
+ds Strata2, has(type string)
+foreach x in `r(varlist)' {
+     forvalues i=128/255 {
+         replace `x' = subinstr(`x', char(`i'), " ", .)
+     }
+}
+
+
+replace Strata2="Bahia Blanca - Cerri" if Strata2=="Bah a Blanca - Cerri"
+replace Strata2="Gran Cordoba" if Strata2=="Gran C rdoba"
+replace Strata2="Gran Parana" if Strata2=="Gran Paran "
+replace Strata2="Gran Tucuman - Tafi Viejo" if Strata2=="Gran Tucum n - Taf  Viejo"
+replace Strata2="Jujuy - Palpala" if Strata2=="Jujuy - Palpal "
+replace Strata2="Mar del Plata - Batan" if Strata2=="Mar del Plata - Bat n"
+replace Strata2="Neuquen - Plottier" if Strata2=="Neuqu n - Plottier"
+replace Strata2="Rio Cuarto" if Strata2=="R o Cuarto"
+replace Strata2="Rio Gallegos" if Strata2=="R o Gallegos"
+replace Strata2="San Nicolas - Villa Constituci0n" if Strata2=="San Nicol s - Villa Constituci n"
+replace Strata2="Ushuaia - Rio Grande" if Strata2=="Ushuaia - R o Grande"
+replace Strata2="Amapa" if Strata2=="Amap "
+replace Strata2="Ceara" if Strata2=="Cear "
+replace Strata2="Espirito Santo" if Strata2=="Esp rito Santo"
+replace Strata2="Goias" if Strata2=="Goi s"
+replace Strata2="Maranhao" if Strata2=="Maranh o"
+replace Strata2="Parana" if Strata2=="Paran "
+replace Strata2="Paraiba" if Strata2=="Para ba"
+replace Strata2="Para" if Strata2=="Par "
+replace Strata2="Piaui" if Strata2=="Piau "
+replace Strata2="Rondonia" if Strata2=="Rond nia"
+replace Strata2="Sao Paulo" if Strata2=="S o Paulo"
+replace Strata2="Michoacan" if Strata2=="Michoac n"
+replace Strata2="Mexico" if Strata2=="M xico"
+replace Strata2="Nuevo Leon" if Strata2=="Nuevo Le n"
+replace Strata2="Querataro de Arteaga" if Strata2=="Quer taro de Arteaga"
+replace Strata2="San Luis Potosi" if Strata2=="San Luis Potos "
+replace Strata2="Yucatan" if Strata2=="Yucat n"
+
 
 label drop _all
 
