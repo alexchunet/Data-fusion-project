@@ -7,12 +7,12 @@ Quarterly for Argentina and Brazil. Monthly for United States, Colombia and Mexi
 
 ## if "`country'"=="ARG" local strata "reg_aglomerado"  
 
-Bah�a Blanca - Cerri, Ciudad de Buenos Aires, Comodoro Rivadavia - Rada Tilly, Concordia, Corrientes, Formosa, Gran Catamarca, Gran C�rdoba, Gran La Plata, Gran Mendoza, Gran Paran�, Gran Resistencia, Gran Rosario, Gran San Juan, Gran Santa Fe, Gran Tucum�n - Taf� Viejo, Jujuy - Palpal�, La Rioja, Mar del Plata - Bat�n, Neuqu�n - Plottier, Partidos del GBA, Posadas, Rawson - Trelew, R�o Cuarto, R�o Gallegos, Salta, San Luis - El Chorrillo, San Nicol�s - Villa Constituci�n, Santa Rosa - Toay, Santiago del Estero - La Banda, Ushuaia - R�o Grande, Viedma - Carmen de Patagones
+Bahia Blanca - Cerri, Ciudad de Buenos Aires, Comodoro Rivadavia - Rada Tilly, Concordia, Corrientes, Formosa, Gran Catamarca, Gran Cordoba, Gran La Plata, Gran Mendoza, Gran Parana, Gran Resistencia, Gran Rosario, Gran San Juan, Gran Santa Fe, Gran Tucuman - Tafi Viejo, Jujuy - Palpala, La Rioja, Mar del Plata - Batan, Neuquen - Plottier, Partidos del GBA, Posadas, Rawson - Trelew, Rio Cuarto, Rio Gallegos, Salta, San Luis - El Chorrillo, San Nicolas - Villa Constitucion, Santa Rosa - Toay, Santiago del Estero - La Banda, Ushuaia - Rio Grande, Viedma - Carmen de Patagones
 
 
 ## if "`country'"=="BRA" local strata "reg_uf" 
 
-Acre, Alagoas, Amap�, Amazonas, Bahia, Cear�, Distrito Federal, Esp�rito Santo, Goi�s, Maranh�o, Mato Grosso, Mato Grosso do Sul, Minas Gerais, Paran�, Para�ba, Par�, Pernambuco, Piau�, Rio Grande do Norte, Rio Grande do Sul, Rio de Janeiro, Rond�nia, Roraima, Santa Catarina, Sergipe, S�o Paulo, Tocantins
+Acre, Alagoas, Amapa, Amazonas, Bahia, Ceara, Distrito Federal, Espirito Santo, Goias, Maranhao, Mato Grosso, Mato Grosso do Sul, Minas Gerais, Parana, Paraiba, Para, Pernambuco, Piaui, Rio Grande do Norte, Rio Grande do Sul, Rio de Janeiro, Rondonia, Roraima, Santa Catarina, Sergipe, Sao Paulo, Tocantins
 
 
 ## if "`country'"=="COL" local strata "reg_dpto"  
@@ -22,7 +22,7 @@ Acre, Alagoas, Amap�, Amazonas, Bahia, Cear�, Distrito Federal, Esp�rito S
 
 ## if "`country'"=="MEX" local strata "reg_ent"  
 
-Aguascalientes, Baja California, Baja California Sur, Campeche, Cohauila, Colima, Chiapas, Chihuahua, Distrito Federal, Durango, Guanajuato, Guerrero, Hidalgo, Jalisco, M�xico, Michoac�n, Morelos, Nayarit, Nuevo Le�n, Oaxaca, Puebla, Quer�taro de Arteaga, Quintana Roo, San Luis Potos�, Sinaloa, Sonora, Tabasco, Tamaulipas, Tlaxcala, Veracruz-Llave, Yucat�n, Zacatecas
+Aguascalientes, Baja California, Baja California Sur, Campeche, Cohauila, Colima, Chiapas, Chihuahua, Distrito Federal, Durango, Guanajuato, Guerrero, Hidalgo, Jalisco, Mexico, Michoacan, Morelos, Nayarit, Nuevo Leon, Oaxaca, Puebla, Queretaro de Arteaga, Quintana Roo, San Luis Potosi, Sinaloa, Sonora, Tabasco, Tamaulipas, Tlaxcala, Veracruz-Llave, Yucatan, Zacatecas
 
 
 ## Countries
