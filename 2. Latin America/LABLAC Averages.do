@@ -50,7 +50,7 @@ save "LABLAC Averages.dta", replace
 local variables "ocupado desocupa pea"
 
 *----------1.2: Run loop by urban/rural + total
-foreach country in ARG BRA COL MEX{
+foreach country in ARG BRA COL MEX {
 
 	if "`country'"=="ARG" local survey "EPHC"  
 	if "`country'"=="BRA" local survey "PNADC" 
@@ -85,9 +85,6 @@ foreach country in ARG BRA COL MEX{
 			decode urbano, gen(Urban)
 			drop urbano
 			cap decode Strata, gen(Strata2)
-			if (_rc) continue
-				drop Strata
-				rename Strata2 Strata
 			order Country Year Urban Variable
 
 			append using "LABLAC Averages.dta", force
@@ -108,9 +105,6 @@ foreach country in ARG BRA COL MEX{
 			gen Year = `year'
 			gen Quarter = "`quarter'"
 			cap decode Strata, gen(Strata2)
-			if (_rc) continue
-				drop Strata
-				rename Strata2 Strata
 			order Country Year Urban Variable
 
 			append using "LABLAC Averages.dta", force
