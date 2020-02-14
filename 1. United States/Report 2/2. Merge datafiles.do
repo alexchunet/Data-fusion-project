@@ -21,14 +21,14 @@ Output:
 *version 16
 drop _all
 clear all
-cd "C:\Users\WB459082\Desktop\DECAT\0. United States\Report 2\"
+cd "C:\Users\WB459082\Documents\DECATFINAL\1. United States\Report 2\"
 
 /*==================================================
               1: Merge mentions with locations and unemployment data 
 ==================================================*/
-
+ 
 *----------1.1: Open locations
-				import delimited "account-locations-identified.csv", encoding(UTF-8) clear
+				import delimited "C:\Users\WB459082\Documents\DECATFINAL\1. United States\Sam08142019\Twitter\account-locations-identified.csv", encoding(UTF-8) clear
 				
 				replace country_short="US" if location=="New York"
 				keep if country_short=="US" | country_short=="BR" | country_short=="MX" | country_short=="CO" | country_short=="AR" | country_short==""
@@ -42,7 +42,7 @@ cd "C:\Users\WB459082\Desktop\DECAT\0. United States\Report 2\"
 				save "`locations'"
 
 *----------1.2: Match mentions to location 
-				import delimited "US.csv", encoding(UTF-8) clear
+				import delimited "C:\Users\WB459082\Documents\DECATFINAL\1. United States\Sam08142019\Twitter\US.csv", encoding(UTF-8) clear
 				tostring location_id, replace
 				desc location_id
 				codebook location_id
