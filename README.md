@@ -23,7 +23,7 @@ Acre, Alagoas, Amapa, Amazonas, Bahia, Ceara, Distrito Federal, Espirito Santo, 
 ## if "`country'"=="MEX" local strata "reg_ent"  
 
 Aguascalientes, Baja California, Baja California Sur, Campeche, Cohauila, Colima, Chiapas, Chihuahua, Distrito Federal, Durango, Guanajuato, Guerrero, Hidalgo, Jalisco, Mexico, Michoacan, Morelos, Nayarit, Nuevo Leon, Oaxaca, Puebla, Queretaro de Arteaga, Quintana Roo, San Luis Potosi, Sinaloa, Sonora, Tabasco, Tamaulipas, Tlaxcala, Veracruz-Llave, Yucatan, Zacatecas
-
+.
 
 ## Countries
 | Country       	| Description 	|
